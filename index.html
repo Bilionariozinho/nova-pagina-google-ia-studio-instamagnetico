@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSTAMAGNÉTICO™ | Domine o Instagram</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#050505',
+                        'dark-soft': '#0a0a0a',
+                        accent: '#FF6321', // Laranja Neon
+                        'accent-glow': '#FF8C5A',
+                    },
+                    fontFamily: {
+                        display: ['Syne', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .orange-glow {
+            box-shadow: 0 0 20px rgba(255, 99, 33, 0.3);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, #a1a1a1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .marquee-content {
+            display: flex;
+            animation: marquee 30s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .bento-item {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .bento-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 99, 33, 0.4);
+            background: rgba(255, 99, 33, 0.02);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF6321;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Premium Button Style (EasyBuilder inspired) */
+        .btn-premium {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #FF6321 0%, #FF9500 100%);
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: 9999px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 25px -5px rgba(255, 99, 33, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            /* Force hardware acceleration to fix mobile rendering issues */
+            transform: translateZ(0);
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px) scale(1.01) translateZ(0);
+            box-shadow: 0 15px 35px -5px rgba(255, 99, 33, 0.6);
+            filter: brightness(1.1);
+        }
+
+        .btn-premium:active {
+            transform: translateY(0) scale(0.98) translateZ(0);
+        }
+
+        /* Shimmer Effect */
+        .btn-premium::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 30%;
+            height: 200%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: rotate(30deg);
+            transition: none;
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            30% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .btn-glow {
+            position: absolute;
+            inset: 2px;
+            border-radius: 9999px;
+            background: inherit;
+            filter: blur(12px);
+            opacity: 0.3;
+            z-index: -1;
+            transition: opacity 0.4s;
+            /* Fix for mobile square blur */
+            will-change: filter;
+            transform: translateZ(0);
+        }
+
+        .btn-premium:hover .btn-glow {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 w-full z-50 glass border-b border-white/5">
+        <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="text-2xl font-display font-bold tracking-tighter">
+                INSTA<span class="text-accent">MAGNÉTICO</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium uppercase tracking-widest opacity-70">
+                <a href="#problema" class="hover:text-accent transition-colors">O Problema</a>
+                <a href="#metodo" class="hover:text-accent transition-colors">O Método</a>
+                <a href="#bonus" class="hover:text-accent transition-colors">Bônus</a>
+            </div>
+            <a href="#oferta" class="btn-premium px-3 py-1 text-[8px] group">
+                <span class="relative z-10">Acessar Agora</span>
+                <div class="btn-glow"></div>
+            </a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1920&auto=format&fit=crop" 
+                 alt="Instagram Marketing" 
+                 class="w-full h-full object-cover opacity-20 grayscale"
+                 referrerpolicy="no-referrer">
+            <div class="absolute inset-0 bg-gradient-to-b from-dark via-dark/80 to-dark"></div>
+        </div>
+
+        <!-- Floating Elements (Instagram Themed) -->
+        <div class="absolute inset-0 z-5 pointer-events-none overflow-hidden">
+            <!-- Viral Video Card -->
+            <div class="floating-el absolute top-[15%] left-[5%] md:top-[20%] md:left-[10%] glass p-3 md:p-4 rounded-2xl border border-white/10 opacity-40 md:opacity-100" style="width: 140px; md:width: 180px;">
+                <div class="w-full h-20 md:h-24 bg-accent/20 rounded-xl mb-2 md:mb-3 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover opacity-60" referrerpolicy="no-referrer">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <svg class="w-6 h-6 md:w-8 md:h-8 text-accent" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                </div>
+                <p class="text-[8px] md:text-[10px] font-bold text-accent uppercase tracking-widest">Viralizado</p>
+                <p class="text-[10px] md:text-xs font-bold text-white">1.2M Views</p>
+            </div>
+
+            <!-- Notification Badge -->
+            <div class="floating-el absolute top-[75%] left-[5%] md:top-[60%] md:left-[5%] glass px-3 py-2 md:px-4 md:py-3 rounded-full border border-white/10 flex items-center space-x-2 md:space-x-3 opacity-40 md:opacity-100">
+                <div class="w-6 h-6 md:w-8 md:h-8 bg-accent rounded-full flex items-center justify-center">
+                    <svg class="w-3 h-3 md:w-4 md:h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div>
+                    <p class="text-[8px] md:text-[10px] font-bold text-white leading-none">Novo Seguidor</p>
+                    <p class="text-[7px] md:text-[9px] text-white/50">agora</p>
+                </div>
+            </div>
+
+            <!-- Engagement Stat -->
+            <div class="floating-el absolute top-[15%] right-[5%] md:top-[25%] md:right-[10%] glass p-4 md:p-5 rounded-2xl border border-white/10 opacity-40 md:opacity-100">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="text-[8px] md:text-[10px] font-bold text-white/50 uppercase tracking-widest">Engajamento</p>
+                    <span class="text-[8px] md:text-[10px] font-bold text-green-400">+12.4%</span>
+                </div>
+                <div class="w-24 md:w-32 h-6 md:h-8 flex items-end space-x-1">
+                    <div class="w-full bg-accent/20 h-2 rounded-t-sm"></div>
+                    <div class="w-full bg-accent/40 h-4 rounded-t-sm"></div>
+                    <div class="w-full bg-accent/60 h-3 rounded-t-sm"></div>
+                    <div class="w-full bg-accent/80 h-6 rounded-t-sm"></div>
+                    <div class="w-full bg-accent h-8 rounded-t-sm"></div>
+                </div>
+            </div>
+
+            <!-- Instagram Icon -->
+            <div class="floating-el absolute top-[80%] right-[10%] md:top-[70%] md:right-[15%] w-12 h-12 md:w-16 md:h-16 glass rounded-2xl border border-white/10 flex items-center justify-center opacity-40 md:opacity-100">
+                <svg class="w-6 h-6 md:w-8 md:h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.352.062-2.277.277-3.086.591-.835.324-1.543.758-2.248 1.463-.705.705-1.139 1.413-1.463 2.248-.314.809-.529 1.734-.591 3.086-.058 1.28-.072 1.688-.072 4.947s.014 3.667.072 4.947c.062 1.352.277 2.277.591 3.086.324.835.758 1.543 1.463 2.248.705.705 1.413 1.139 2.248 1.463.809.314 1.734.529 3.086.591 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.352-.062 2.277-.277 3.086-.591.835-.324 1.543-.758 2.248-1.463.705-.705 1.139-1.413 1.463-2.248.314-.809.529-1.734.591-3.086.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.062-1.352-.277-2.277-.591-3.086-.324-.835-.758-1.543-1.463-2.248-.705-.705-1.413-1.139-2.248-1.463-.809-.314-1.734-.529-3.086-.591-1.28-.058-1.688-.072-4.947-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+            <div class="hero-content">
+                <span class="inline-block px-4 py-1.5 rounded-full border border-accent/30 bg-accent/10 text-accent text-[10px] font-bold uppercase tracking-[0.2em] mb-8">
+                    O Sistema Definitivo de Crescimento Viral
+                </span>
+                <h1 class="text-5xl md:text-8xl font-display font-bold leading-[0.9] tracking-tighter mb-8 text-gradient">
+                    TRANSFORME SEU INSTAGRAM EM UMA <span class="text-accent">MÁQUINA DE VENDAS</span> SEM APARECER.
+                </h1>
+                <p class="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                    Acesse o banco exclusivo com mais de <span class="text-white font-bold">3.000 vídeos virais prontos</span> e utilize o Método M3 para viralizar e lucrar em tempo recorde.
+                </p>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                    <a href="#oferta" class="btn-premium px-8 py-4 text-xs md:text-sm group">
+                        <span class="relative z-10">Quero Acessar o Instamagnético</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                </div>
+                <div class="mt-12 flex items-center justify-center space-x-4 opacity-40 text-[10px] uppercase tracking-[0.3em]">
+                    <span>Sem Criar Conteúdo</span>
+                    <span class="w-1 h-1 bg-white rounded-full"></span>
+                    <span>Sem Aparecer</span>
+                    <span class="w-1 h-1 bg-white rounded-full"></span>
+                    <span>100% Automático</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-20">
+            <div class="w-[1px] h-16 bg-gradient-to-b from-accent to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- AUTHORITY MARQUEE -->
+    <section class="py-12 border-y border-white/5 overflow-hidden bg-dark-soft">
+        <div class="marquee-content whitespace-nowrap flex items-center">
+            <!-- Repeat logos/text for marquee -->
+            <div class="flex items-center space-x-20 px-10">
+                <span class="text-2xl font-display font-bold opacity-20 italic">VIRALIZAÇÃO</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">LIBERDADE</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">RESULTADOS</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">MÉTODO M3</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">INSTAMAGNÉTICO</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">DARK ACCOUNTS</span>
+            </div>
+            <div class="flex items-center space-x-20 px-10">
+                <span class="text-2xl font-display font-bold opacity-20 italic">VIRALIZAÇÃO</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">LIBERDADE</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">RESULTADOS</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">MÉTODO M3</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">INSTAMAGNÉTICO</span>
+                <span class="text-2xl font-display font-bold opacity-20 italic">DARK ACCOUNTS</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DO PROBLEMA -->
+    <section id="problema" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-20 items-center">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-6xl font-display font-bold leading-tight mb-8">
+                        POR QUE VOCÊ AINDA <span class="text-accent italic">NÃO CRESCEU?</span>
+                    </h2>
+                    <p class="text-white/60 mb-10 leading-relaxed">
+                        A maioria das pessoas falha no Instagram porque tenta reinventar a roda. Elas gastam horas criando conteúdo do zero, têm medo de aparecer e não entendem como o algoritmo realmente funciona.
+                    </p>
+                    <ul class="space-y-6">
+                        <li class="flex items-start space-x-4">
+                            <div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </div>
+                            <span class="text-white/80">Falta de ideias constantes para postar.</span>
+                        </li>
+                        <li class="flex items-start space-x-4">
+                            <div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </div>
+                            <span class="text-white/80">Medo de julgamentos ou de se expor.</span>
+                        </li>
+                        <li class="flex items-start space-x-4">
+                            <div class="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center shrink-0 mt-1">
+                                <svg class="w-3 h-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </div>
+                            <span class="text-white/80">Postagens que não geram visualizações.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="relative reveal">
+                    <div class="aspect-square rounded-3xl overflow-hidden border border-white/10 glass">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1000&auto=format&fit=crop" 
+                             alt="Frustração Digital" 
+                             class="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700"
+                             referrerpolicy="no-referrer">
+                    </div>
+                    <!-- Floating Element -->
+                    <div class="absolute -bottom-10 -left-10 glass p-6 rounded-2xl border border-white/10 max-w-[240px]">
+                        <p class="text-xs font-bold text-accent uppercase tracking-widest mb-2">A Realidade</p>
+                        <p class="text-sm text-white/70 italic">"97% dos perfis morrem nos primeiros 30 dias por falta de consistência."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUEBRA DE CRENÇA -->
+    <section class="py-32 bg-dark-soft">
+        <div class="max-w-4xl mx-auto px-6 text-center reveal">
+            <h3 class="text-3xl md:text-5xl font-display font-bold mb-8">
+                O SEGREDO NÃO É CRIAR, É <span class="text-accent underline decoration-accent/30 underline-offset-8">MODELAR</span>.
+            </h3>
+            <p class="text-lg text-white/60 leading-relaxed">
+                Os maiores perfis do mundo não criam tudo do zero. Eles utilizam padrões que já provaram funcionar. O Instamagnético entrega esses padrões em suas mãos, prontos para serem replicados.
+            </p>
+        </div>
+    </section>
+
+    <!-- DIFERENCIAIS (BENTO GRID) -->
+    <section id="metodo" class="py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-6xl font-display font-bold mb-6">O QUE VOCÊ <span class="text-accent">RECEBE</span></h2>
+                <p class="text-white/40 uppercase tracking-[0.3em] text-xs">Acesso Exclusivo ao Ecossistema Premium</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[240px]">
+                <!-- Item 1: Large -->
+                <div class="md:col-span-2 md:row-span-2 glass rounded-3xl p-10 flex flex-col justify-end relative overflow-hidden bento-item reveal">
+                    <div class="absolute top-0 right-0 p-10 opacity-10">
+                        <svg class="w-40 h-40 text-accent" fill="currentColor" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 .6-.03 1.29-.1 2.09-.06.8-.15 1.43-.28 1.9-.13.47-.35.87-.65 1.2-.3.33-.7.55-1.2.68-.47.13-1.1.22-1.9.28-.8.07-1.49.1-2.09.1L12 18.25c-.6 0-1.29-.03-2.09-.1-.8-.06-1.43-.15-1.9-.28-.47-.13-.87-.35-1.2-.65-.33-.3-.55-.7-.68-1.2-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L5.75 12c0-.6.03-1.29.1-2.09.06-.8.15-1.43.28-1.9.13-.47.35-.87.65-1.2.3-.33.7-.55 1.2-.68.47-.13 1.1-.22 1.9-.28.8-.07 1.49-.1 2.09-.1L12 5.75c.6 0 1.29.03 2.09.1.8.06 1.43.15 1.9.28.47.13.87.35 1.2.65.33.3.55.7.68 1.2z"/></svg>
+                    </div>
+                    <div class="relative z-10">
+                        <h4 class="text-3xl font-display font-bold mb-4">+3.000 Vídeos Virais</h4>
+                        <p class="text-white/50 max-w-md">Acesso vitalício ao nosso banco de dados com vídeos testados que geram milhões de visualizações sem você precisar aparecer.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="glass rounded-3xl p-8 flex flex-col justify-center bento-item reveal">
+                    <h4 class="text-xl font-display font-bold mb-3">Análise de Perfil</h4>
+                    <p class="text-sm text-white/50">Nossa equipe analisa seu perfil nos primeiros 7 dias para garantir que você está no caminho certo.</p>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="glass rounded-3xl p-8 flex flex-col justify-center bento-item reveal">
+                    <h4 class="text-xl font-display font-bold mb-3">Estratégias Premium</h4>
+                    <p class="text-sm text-white/50">Aprenda a transformar seguidores em compradores recorrentes com funis de venda automáticos.</p>
+                </div>
+
+                <!-- Item 4: Wide -->
+                <div class="md:col-span-3 glass rounded-3xl p-10 flex flex-col md:flex-row items-center justify-between bento-item reveal">
+                    <div class="mb-6 md:mb-0">
+                        <h4 class="text-2xl font-display font-bold mb-2">Método M3: Mente, Mídia e Movimento</h4>
+                        <p class="text-white/50">O framework completo para dominar o algoritmo do Instagram em 2026.</p>
+                    </div>
+                    <div class="flex -space-x-4">
+                        <img src="https://i.pravatar.cc/100?u=1" class="w-12 h-12 rounded-full border-2 border-dark" alt="User">
+                        <img src="https://i.pravatar.cc/100?u=2" class="w-12 h-12 rounded-full border-2 border-dark" alt="User">
+                        <img src="https://i.pravatar.cc/100?u=3" class="w-12 h-12 rounded-full border-2 border-dark" alt="User">
+                        <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-[10px] font-bold">+1.2k</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section class="py-32 bg-dark-soft">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-6xl font-display font-bold mb-6">3 PASSOS PARA A <span class="text-accent italic">LIBERDADE</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="text-center reveal">
+                    <div class="text-6xl font-display font-bold text-white/10 mb-6">01</div>
+                    <h4 class="text-xl font-bold mb-4">Escolha o Vídeo</h4>
+                    <p class="text-white/50 text-sm">Selecione um dos 3.000 vídeos virais do nosso banco exclusivo.</p>
+                </div>
+                <div class="text-center reveal">
+                    <div class="text-6xl font-display font-bold text-white/10 mb-6">02</div>
+                    <h4 class="text-xl font-bold mb-4">Edição Express</h4>
+                    <p class="text-white/50 text-sm">Aplique nossa técnica de edição de 5 minutos para tornar o vídeo único.</p>
+                </div>
+                <div class="text-center reveal">
+                    <div class="text-6xl font-display font-bold text-white/10 mb-6">03</div>
+                    <h4 class="text-xl font-bold mb-4">Poste e Lucre</h4>
+                    <p class="text-white/50 text-sm">Siga o cronograma de postagem e veja sua conta explodir em seguidores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESULTADOS REAIS -->
+    <section id="resultados" class="py-32 bg-dark">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-6xl font-display font-bold mb-6">RESULTADOS <span class="text-accent italic">REAIS</span></h2>
+                <p class="text-white/40 uppercase tracking-[0.3em] text-xs">O que você pode alcançar com o Instamagnético</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Chart Section -->
+                <div class="glass rounded-[40px] p-8 md:p-12 border border-white/5 reveal">
+                    <div class="mb-10">
+                        <div class="flex justify-between items-end mb-4">
+                            <div>
+                                <p class="text-xs font-bold text-accent uppercase tracking-widest mb-1">Alcance Mensal</p>
+                                <h3 class="text-4xl font-display font-bold">+1.248.392</h3>
+                            </div>
+                            <span class="text-green-400 font-bold text-sm">+420%</span>
+                        </div>
+                        <div class="w-full h-32 flex items-end space-x-2">
+                            <div class="bar-anim w-full bg-accent/10 h-[20%] rounded-t-lg"></div>
+                            <div class="bar-anim w-full bg-accent/20 h-[35%] rounded-t-lg"></div>
+                            <div class="bar-anim w-full bg-accent/30 h-[25%] rounded-t-lg"></div>
+                            <div class="bar-anim w-full bg-accent/40 h-[50%] rounded-t-lg"></div>
+                            <div class="bar-anim w-full bg-accent/60 h-[45%] rounded-t-lg"></div>
+                            <div class="bar-anim w-full bg-accent/80 h-[75%] rounded-t-lg"></div>
+                            <div class="bar-anim w-full bg-accent h-[100%] rounded-t-lg"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="p-6 rounded-2xl bg-white/5 border border-white/5">
+                            <p class="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Novos Seguidores</p>
+                            <p class="text-2xl font-display font-bold text-white">+52.4k</p>
+                        </div>
+                        <div class="p-6 rounded-2xl bg-white/5 border border-white/5">
+                            <p class="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">ROI Médio</p>
+                            <p class="text-2xl font-display font-bold text-accent">12.5x</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="reveal">
+                    <h3 class="text-3xl md:text-5xl font-display font-bold leading-tight mb-8">
+                        NÚMEROS QUE <span class="text-accent italic">FALAM POR SI.</span>
+                    </h3>
+                    <p class="text-white/60 mb-10 leading-relaxed text-lg">
+                        Não estamos falando de "likes" vazios. Estamos falando de alcance real, crescimento de audiência qualificada e conversão em vendas. Nossos alunos utilizam o banco de vídeos para dominar nichos inteiros sem nunca mostrar o rosto.
+                    </p>
+                    <div class="space-y-8">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center shrink-0 border border-accent/20">
+                                <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Escalabilidade Viral</h4>
+                                <p class="text-white/40 text-sm">Vídeos que continuam gerando visualizações meses após a postagem.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-6">
+                            <div class="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center shrink-0 border border-accent/20">
+                                <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Monetização Dark</h4>
+                                <p class="text-white/40 text-sm">Transforme sua audiência em lucro real através de parcerias e produtos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BÔNUS EXCLUSIVOS -->
+    <section id="bonus" class="py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-6xl font-display font-bold mb-6">BÔNUS <span class="text-accent">INSANOS</span></h2>
+                <p class="text-white/40">Apenas para quem agir agora</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Bonus 1 -->
+                <div class="glass rounded-3xl p-8 border-t-4 border-accent reveal">
+                    <div class="text-accent font-bold text-xs uppercase tracking-widest mb-4">Bônus 01</div>
+                    <h4 class="text-xl font-bold mb-4">Arsenal de Ganchos Virais</h4>
+                    <p class="text-sm text-white/50 mb-6">As frases exatas que prendem a atenção nos primeiros 3 segundos do vídeo.</p>
+                    <div class="text-accent font-bold">R$ 97,00 <span class="text-white/20 line-through ml-2">GRÁTIS</span></div>
+                </div>
+                <!-- Bonus 2 -->
+                <div class="glass rounded-3xl p-8 border-t-4 border-accent reveal">
+                    <div class="text-accent font-bold text-xs uppercase tracking-widest mb-4">Bônus 02</div>
+                    <h4 class="text-xl font-bold mb-4">Grupo Secreto de Estratégias</h4>
+                    <p class="text-sm text-white/50 mb-6">Networking com quem já está faturando alto e atualizações semanais.</p>
+                    <div class="text-accent font-bold">R$ 197,00 <span class="text-white/20 line-through ml-2">GRÁTIS</span></div>
+                </div>
+                <!-- Bonus 3 -->
+                <div class="glass rounded-3xl p-8 border-t-4 border-accent reveal">
+                    <div class="text-accent font-bold text-xs uppercase tracking-widest mb-4">Bônus 03</div>
+                    <h4 class="text-xl font-bold mb-4">Feedback Individual</h4>
+                    <p class="text-sm text-white/50 mb-6">Análise personalizada do seu primeiro perfil para evitar erros comuns.</p>
+                    <div class="text-accent font-bold">R$ 297,00 <span class="text-white/20 line-through ml-2">GRÁTIS</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GARANTIA -->
+    <section class="py-32 bg-dark-soft">
+        <div class="max-w-5xl mx-auto px-6 glass rounded-[40px] p-12 md:p-20 text-center border border-white/5 reveal">
+            <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Garantia" class="w-24 h-24 mx-auto mb-8 invert opacity-80">
+            <h2 class="text-3xl md:text-5xl font-display font-bold mb-6">RISCO ZERO POR <span class="text-accent">7 DIAS</span></h2>
+            <p class="text-lg text-white/60 max-w-2xl mx-auto">
+                Se em até 7 dias você não estiver satisfeito com o conteúdo ou achar que o Instamagnético não é para você, devolvemos 100% do seu dinheiro. Sem perguntas, sem burocracia.
+            </p>
+        </div>
+    </section>
+
+    <!-- OFERTA FINAL -->
+    <section id="oferta" class="py-32 relative overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 blur-[120px] rounded-full"></div>
+
+        <div class="max-w-3xl mx-auto px-6 text-center relative z-10 reveal">
+            <h2 class="text-5xl md:text-7xl font-display font-bold mb-12">OFERTA <span class="text-accent">EXCLUSIVA</span></h2>
+            
+            <div class="glass rounded-3xl p-10 md:p-16 border border-accent/20">
+                <div class="mb-10">
+                    <p class="text-white/40 uppercase tracking-widest text-xs mb-4">Tudo isso por apenas:</p>
+                    <div class="flex items-center justify-center space-x-2">
+                        <span class="text-2xl font-bold text-white/40">R$</span>
+                        <span class="text-7xl md:text-9xl font-display font-bold text-accent">197</span>
+                    </div>
+                    <p class="text-white/40 text-sm mt-4">Ou em até 12x no cartão</p>
+                </div>
+
+                <div class="space-y-4 mb-12 text-left max-w-sm mx-auto">
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span class="text-sm font-medium">Acesso ao Sistema Instamagnético</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span class="text-sm font-medium">Banco com +3.000 Vídeos Virais</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span class="text-sm font-medium">Todos os 3 Bônus Exclusivos</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        <span class="text-sm font-medium">Garantia Blindada de 7 Dias</span>
+                    </div>
+                </div>
+
+                <a href="#" class="btn-premium w-full py-4 text-base md:text-lg group">
+                    <span class="relative z-10">Quero Começar Agora</span>
+                    <div class="btn-glow"></div>
+                </a>
+                
+                <div class="mt-8 flex flex-col items-center space-y-4 opacity-50">
+                    <div class="flex items-center justify-center space-x-6">
+                        <!-- Visa -->
+                        <svg class="h-4 w-auto" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.91 31.52L21.84 16.48H17.18L14.25 31.52H18.91ZM32.88 16.89C32.17 16.61 31.06 16.32 29.69 16.32C26.31 16.32 23.92 18.12 23.9 20.7C23.88 22.6 25.59 23.66 26.89 24.3C28.22 24.95 28.67 25.37 28.67 25.95C28.65 26.85 27.58 27.25 26.6 27.25C25.33 27.25 24.61 26.89 24.03 26.62L23.44 30.65C24.55 31.16 26.51 31.6 28.56 31.6C32.16 31.6 34.52 29.82 34.55 27.06C34.57 24.78 33.19 23.8 31.32 22.9C29.98 22.25 29.31 21.88 29.31 21.24C29.31 20.66 29.98 20.04 31.22 20.04C32.33 20.04 33.04 20.27 33.51 20.48L34.08 16.61C33.74 16.74 33.36 16.83 32.88 16.89ZM44.25 16.48H40.66C39.56 16.48 38.68 16.8 38.19 17.96L32.44 31.52H37.34L38.32 28.84H44.31L44.87 31.52H49.19L45.41 16.48H44.25ZM39.69 25.1L42.12 18.47L43.51 25.1H39.69ZM11.72 16.48L7.14 26.75L6.65 24.25C5.81 21.41 3.38 18.52 0.65 17.08L4.62 31.51H9.55L16.89 16.48H11.72Z" fill="currentColor"/>
+                        </svg>
+                        <!-- Mastercard -->
+                        <svg class="h-6 w-auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 12c0 2.12-1.03 3.99-2.61 5.14A6.001 6.001 0 0115 6c1.01 0 1.93.25 2.73.69A5.98 5.98 0 0015 12z" fill="currentColor" fill-opacity="0.5"/>
+                            <path d="M9 12c0-2.12 1.03-3.99 2.61-5.14A6.001 6.001 0 019 18c-1.01 0-1.93-.25-2.73-.69A5.98 5.98 0 009 12z" fill="currentColor"/>
+                        </svg>
+                        <!-- Pix -->
+                        <div class="flex items-center space-x-1">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 12l10 10 10-10L12 2zm0 17.5L4.5 12 12 4.5 19.5 12 12 19.5z" fill="currentColor"/>
+                                <path d="M12 7l-5 5 5 5 5-5-5-5zm0 7.5L9.5 12 12 9.5 14.5 12 12 14.5z" fill="currentColor"/>
+                            </svg>
+                            <span class="text-[10px] font-bold tracking-tighter">PIX</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 text-[9px] uppercase tracking-[0.2em] font-bold">
+                        <svg class="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <span>Ambiente 100% Seguro</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-20 border-t border-white/5 bg-dark">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="text-base font-display font-bold tracking-tighter mb-8">
+                INSTA<span class="text-accent">MAGNÉTICO</span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-8 text-xs uppercase tracking-widest text-white/40 mb-12">
+                <a href="#" class="hover:text-white transition-colors">Termos de Uso</a>
+                <a href="#" class="hover:text-white transition-colors">Privacidade</a>
+                <a href="#" class="hover:text-white transition-colors">Suporte</a>
+            </div>
+            <p class="text-[10px] text-white/20 uppercase tracking-[0.4em]">
+                Copyright 2026 © Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- GSAP ANIMATIONS -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+    
+        // Hero Entrance
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            
+            tl.from('.hero-content > *', {
+                y: 50,
+                opacity: 0,
+                duration: 1.2,
+                stagger: 0.2,
+                ease: "power4.out"
+            });
+
+            // Floating elements animation
+            gsap.from('.floating-el', {
+                scale: 0,
+                opacity: 0,
+                duration: 1.5,
+                stagger: 0.2,
+                ease: "back.out(1.7)",
+                delay: 0.5
+            });
+
+            // Continuous floating movement
+            document.querySelectorAll('.floating-el').forEach((el, i) => {
+                gsap.to(el, {
+                    y: "random(-20, 20)",
+                    x: "random(-10, 10)",
+                    rotation: "random(-5, 5)",
+                    duration: "random(2, 4)",
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut",
+                    delay: i * 0.2
+                });
+            });
+        });
+
+        // Scroll Reveal
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach((el) => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // Bar Animation
+        gsap.from('.bar-anim', {
+            scrollTrigger: {
+                trigger: '#resultados',
+                start: "top 70%",
+            },
+            scaleY: 0,
+            transformOrigin: "bottom",
+            duration: 1.5,
+            stagger: 0.1,
+            ease: "power4.out"
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
