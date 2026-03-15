@@ -63,6 +63,11 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
         .bento-item {
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
@@ -71,6 +76,27 @@
             transform: translateY(-5px);
             border-color: rgba(255, 99, 33, 0.4);
             background: rgba(255, 99, 33, 0.02);
+        }
+
+        .marquee-text-track span {
+            display: inline-block;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .marquee-text-track span:hover {
+            transform: scale(1.1) skewX(-10deg);
+            opacity: 1 !important;
+            text-shadow: 0 0 20px rgba(255, 99, 33, 0.5);
+        }
+
+        #resultados .glass {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        #resultados .glass:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 99, 33, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 99, 33, 0.1);
         }
 
         /* Custom Scrollbar */
@@ -178,7 +204,7 @@
                 <a href="#metodo" class="hover:text-accent transition-colors">O Método</a>
                 <a href="#bonus" class="hover:text-accent transition-colors">Bônus</a>
             </div>
-            <a href="#oferta" class="btn-premium px-4 py-2 text-[10px] md:text-xs group whitespace-nowrap text-center">
+            <a href="https://payment.ticto.app/OB948C17A" class="btn-premium px-4 py-2 text-[10px] md:text-xs group whitespace-nowrap text-center">
                 <span class="relative z-10 w-full">Acessar Agora</span>
                 <div class="btn-glow"></div>
             </a>
@@ -256,7 +282,7 @@
                     Acesse o banco exclusivo com mais de <span class="text-white font-bold">3.000 vídeos virais prontos</span> e utilize o Método M3 para viralizar e lucrar em tempo recorde.
                 </p>
                 <div class="flex flex-col md:flex-row items-center justify-center gap-6">
-                    <a href="#oferta" class="btn-premium px-8 py-4 text-xs md:text-sm group">
+                    <a href="https://payment.ticto.app/OB948C17A" class="btn-premium px-8 py-4 text-xs md:text-sm group">
                         <span class="relative z-10">Quero Acessar o Instamagnético</span>
                         <div class="btn-glow"></div>
                     </a>
@@ -279,23 +305,23 @@
 
     <!-- AUTHORITY MARQUEE -->
     <section class="py-12 border-y border-white/5 overflow-hidden bg-dark-soft">
-        <div class="marquee-content whitespace-nowrap flex items-center">
+        <div class="marquee-text-track whitespace-nowrap flex items-center">
             <!-- Repeat logos/text for marquee -->
             <div class="flex items-center space-x-20 px-10">
-                <span class="text-2xl font-display font-bold opacity-20 italic">VIRALIZAÇÃO</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">LIBERDADE</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">RESULTADOS</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">MÉTODO M3</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">INSTAMAGNÉTICO</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">DARK ACCOUNTS</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">VIRALIZAÇÃO</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">LIBERDADE</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">RESULTADOS</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">MÉTODO M3</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">INSTAMAGNÉTICO</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">DARK ACCOUNTS</span>
             </div>
             <div class="flex items-center space-x-20 px-10">
-                <span class="text-2xl font-display font-bold opacity-20 italic">VIRALIZAÇÃO</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">LIBERDADE</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">RESULTADOS</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">MÉTODO M3</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">INSTAMAGNÉTICO</span>
-                <span class="text-2xl font-display font-bold opacity-20 italic">DARK ACCOUNTS</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">VIRALIZAÇÃO</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">LIBERDADE</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">RESULTADOS</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">MÉTODO M3</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">INSTAMAGNÉTICO</span>
+                <span class="text-2xl font-display font-bold text-white/20 italic hover:text-accent transition-colors duration-500 cursor-default">DARK ACCOUNTS</span>
             </div>
         </div>
     </section>
@@ -616,11 +642,16 @@
             <div class="glass rounded-3xl p-10 md:p-16 border border-accent/20">
                 <div class="mb-10">
                     <p class="text-white/40 uppercase tracking-widest text-xs mb-4">Tudo isso por apenas:</p>
-                    <div class="flex items-center justify-center space-x-2">
-                        <span class="text-2xl font-bold text-white/40">R$</span>
-                        <span class="text-7xl md:text-9xl font-display font-bold text-accent">197</span>
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="flex items-center justify-center space-x-3">
+                            <span class="text-3xl md:text-4xl font-bold text-white/40">11x</span>
+                            <div class="flex items-center">
+                                <span class="text-2xl font-bold text-white/40 mr-2">R$</span>
+                                <span class="text-7xl md:text-9xl font-display font-bold text-accent">6,42</span>
+                            </div>
+                        </div>
+                        <p class="text-white/40 text-lg mt-4 font-medium">ou 57,90 avista</p>
                     </div>
-                    <p class="text-white/40 text-sm mt-4">Ou em até 12x no cartão</p>
                 </div>
 
                 <div class="space-y-4 mb-12 text-left max-w-sm mx-auto">
@@ -642,7 +673,7 @@
                     </div>
                 </div>
 
-                <a href="#" class="btn-premium w-full py-4 text-base md:text-lg group">
+                <a href="https://payment.ticto.app/OB948C17A" class="btn-premium w-full py-4 text-base md:text-lg group">
                     <span class="relative z-10">Quero Começar Agora</span>
                     <div class="btn-glow"></div>
                 </a>
@@ -707,7 +738,14 @@
             canvas.height = section.offsetHeight;
         }
 
-        window.addEventListener('resize', resizeCanvas);
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                resizeCanvas();
+                initDrops();
+            }, 200);
+        });
         resizeCanvas();
 
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
@@ -724,7 +762,6 @@
         }
 
         initDrops();
-        window.addEventListener('resize', initDrops);
 
         function drawMatrix() {
             // Very subtle trail effect
@@ -814,39 +851,37 @@
         });
 
         // Infinite Marquee GSAP
-        const marqueeTrack = document.querySelector('.marquee-track');
-        if (marqueeTrack) {
-            const items = marqueeTrack.querySelectorAll('.marquee-item');
-            const totalWidth = marqueeTrack.scrollWidth / 2;
+        function initMarquees() {
+            const marqueeTrack = document.querySelector('.marquee-track');
+            if (marqueeTrack) {
+                const totalWidth = marqueeTrack.scrollWidth / 2;
+                gsap.to(marqueeTrack, {
+                    x: -totalWidth,
+                    duration: 25,
+                    ease: "none",
+                    repeat: -1,
+                    modifiers: {
+                        x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+                    }
+                });
+            }
 
-            gsap.to(marqueeTrack, {
-                x: -totalWidth,
-                duration: 20,
-                ease: "none",
-                repeat: -1,
-                modifiers: {
-                    x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
-                }
-            });
+            const textTrack = document.querySelector('.marquee-text-track');
+            if (textTrack) {
+                const totalWidth = textTrack.scrollWidth / 2;
+                gsap.to(textTrack, {
+                    x: -totalWidth,
+                    duration: 40,
+                    ease: "none",
+                    repeat: -1,
+                    modifiers: {
+                        x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+                    }
+                });
+            }
         }
 
-        // Exit Orbit Animation for #resultados
-        gsap.to('#resultados .reveal', {
-            scrollTrigger: {
-                trigger: '#resultados',
-                start: "bottom 80%",
-                end: "bottom top",
-                scrub: 1,
-                toggleActions: "none play none reverse"
-            },
-            y: -500,
-            x: (i) => (i % 2 === 0 ? -200 : 200),
-            rotation: (i) => (i % 2 === 0 ? -45 : 45),
-            scale: 0.5,
-            opacity: 0,
-            stagger: 0.05,
-            ease: "power2.in"
-        });
+        window.addEventListener('load', initMarquees);
 
         // Smooth Scroll for Anchor Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
