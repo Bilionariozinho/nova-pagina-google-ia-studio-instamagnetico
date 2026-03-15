@@ -63,16 +63,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .marquee-content {
-            display: flex;
-            animation: marquee 30s linear infinite;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
         .bento-item {
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
@@ -179,8 +169,8 @@
 
     <!-- HEADER -->
     <header class="fixed top-0 left-0 w-full z-50 glass border-b border-white/5">
-        <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="text-2xl font-display font-bold tracking-tighter">
+        <nav class="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-4">
+            <div class="text-xl md:text-2xl font-display font-bold tracking-tighter shrink-0 whitespace-nowrap">
                 INSTA<span class="text-accent">MAGNÉTICO</span>
             </div>
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium uppercase tracking-widest opacity-70">
@@ -188,15 +178,15 @@
                 <a href="#metodo" class="hover:text-accent transition-colors">O Método</a>
                 <a href="#bonus" class="hover:text-accent transition-colors">Bônus</a>
             </div>
-            <a href="#oferta" class="btn-premium px-3 py-1 text-[8px] group">
-                <span class="relative z-10">Acessar Agora</span>
+            <a href="#oferta" class="btn-premium px-4 py-2 text-[10px] md:text-xs group whitespace-nowrap text-center">
+                <span class="relative z-10 w-full">Acessar Agora</span>
                 <div class="btn-glow"></div>
             </a>
         </nav>
     </header>
 
     <!-- HERO SECTION -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section class="relative min-h-screen flex items-center justify-center pt-24 md:pt-40 overflow-hidden">
         <!-- Background Image with Overlay -->
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1920&auto=format&fit=crop" 
@@ -209,7 +199,7 @@
         <!-- Floating Elements (Instagram Themed) -->
         <div class="absolute inset-0 z-5 pointer-events-none overflow-hidden">
             <!-- Viral Video Card -->
-            <div class="floating-el absolute top-[15%] left-[5%] md:top-[20%] md:left-[10%] glass p-3 md:p-4 rounded-2xl border border-white/10 opacity-40 md:opacity-100" style="width: 140px; md:width: 180px;">
+            <div class="floating-el absolute top-[10%] left-[5%] md:top-[20%] md:left-[10%] glass p-3 md:p-4 rounded-2xl border border-white/10 opacity-20 md:opacity-100" style="width: 120px; md:width: 180px;">
                 <div class="w-full h-20 md:h-24 bg-accent/20 rounded-xl mb-2 md:mb-3 overflow-hidden relative">
                     <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover opacity-60" referrerpolicy="no-referrer">
                     <div class="absolute inset-0 flex items-center justify-center">
@@ -232,7 +222,7 @@
             </div>
 
             <!-- Engagement Stat -->
-            <div class="floating-el absolute top-[15%] right-[5%] md:top-[25%] md:right-[10%] glass p-4 md:p-5 rounded-2xl border border-white/10 opacity-40 md:opacity-100">
+            <div class="floating-el absolute top-[10%] right-[5%] md:top-[25%] md:right-[10%] glass p-4 md:p-5 rounded-2xl border border-white/10 opacity-20 md:opacity-100">
                 <div class="flex items-center justify-between mb-2">
                     <p class="text-[8px] md:text-[10px] font-bold text-white/50 uppercase tracking-widest">Engajamento</p>
                     <span class="text-[8px] md:text-[10px] font-bold text-green-400">+12.4%</span>
@@ -344,7 +334,7 @@
                 </div>
                 <div class="relative reveal">
                     <div class="aspect-square rounded-3xl overflow-hidden border border-white/10 glass">
-                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1000&auto=format&fit=crop" 
+                        <img src="https://github.com/Bilionariozinho/arquivos-de-imagens-instamagnetico/blob/fe34f954d1f0a15840673dcbdb6f27e1db7e6fd0/Design%20sem%20nome.png?raw=true" 
                              alt="Frustração Digital" 
                              class="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700"
                              referrerpolicy="no-referrer">
@@ -448,8 +438,11 @@
     </section>
 
     <!-- RESULTADOS REAIS -->
-    <section id="resultados" class="py-32 bg-dark">
-        <div class="max-w-7xl mx-auto px-6">
+    <section id="resultados" class="relative py-32 bg-dark overflow-hidden">
+        <!-- Matrix Canvas Background -->
+        <canvas id="matrix-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-10"></canvas>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
             <div class="text-center mb-20 reveal">
                 <h2 class="text-4xl md:text-6xl font-display font-bold mb-6">RESULTADOS <span class="text-accent italic">REAIS</span></h2>
                 <p class="text-white/40 uppercase tracking-[0.3em] text-xs">O que você pode alcançar com o Instamagnético</p>
@@ -515,6 +508,51 @@
                                 <h4 class="text-xl font-bold mb-1">Monetização Dark</h4>
                                 <p class="text-white/40 text-sm">Transforme sua audiência em lucro real através de parcerias e produtos.</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-24 reveal">
+                <div class="text-center mb-12">
+                    <h4 class="text-2xl md:text-4xl font-display font-bold mb-4 uppercase tracking-tighter">
+                        Domine a Atenção do Seu Público
+                    </h4>
+                    <p class="text-white/60 max-w-2xl mx-auto mb-2 text-lg">
+                        Utilize o poder das imagens magnéticas para prender o olhar e converter seguidores em clientes fiéis.
+                    </p>
+                    <span class="text-[10px] uppercase tracking-[0.3em] text-accent font-bold">
+                        Exemplos de Conteúdo de Alta Retenção
+                    </span>
+                </div>
+
+                <div class="relative overflow-hidden py-10">
+                    <div class="marquee-track flex gap-6">
+                        <!-- First set -->
+                        <div class="marquee-item shrink-0 w-64 aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 glass">
+                            <img src="https://github.com/Bilionariozinho/arquivos-de-imagens-instamagnetico/blob/arquivos-midiaticos/1.gif?raw=true" class="w-full h-full object-cover" referrerpolicy="no-referrer">
+                        </div>
+                        <div class="marquee-item shrink-0 w-64 aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 glass">
+                            <img src="https://github.com/Bilionariozinho/arquivos-de-imagens-instamagnetico/blob/arquivos-midiaticos/2.gif?raw=true" class="w-full h-full object-cover" referrerpolicy="no-referrer">
+                        </div>
+                        <div class="marquee-item shrink-0 w-64 aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 glass">
+                            <img src="https://github.com/Bilionariozinho/arquivos-de-imagens-instamagnetico/blob/arquivos-midiaticos/3.gif?raw=true" class="w-full h-full object-cover" referrerpolicy="no-referrer">
+                        </div>
+                        <div class="marquee-item shrink-0 w-64 aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 glass">
+                            <img src="https://github.com/Bilionariozinho/arquivos-de-imagens-instamagnetico/blob/arquivos-midiaticos/4.gif?raw=true" class="w-full h-full object-cover" referrerpolicy="no-referrer">
+                        </div>
+                        <!-- Second set for infinite loop -->
+                        <div class="marquee-item shrink-0 w-64 aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 glass">
+                            <img src="https://github.com/Bilionariozinho/arquivos-de-imagens-instamagnetico/blob/arquivos-midiaticos/1.gif?raw=true" class="w-full h-full object-cover" referrerpolicy="no-referrer">
+                        </div>
+                        <div class="marquee-item shrink-0 w-64 aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 glass">
+                            <img src="https://github.com/Bilionariozinho/arquivos-de-imagens-instamagnetico/blob/arquivos-midiaticos/2.gif?raw=true" class="w-full h-full object-cover" referrerpolicy="no-referrer">
+                        </div>
+                        <div class="marquee-item shrink-0 w-64 aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 glass">
+                            <img src="https://github.com/Bilionariozinho/arquivos-de-imagens-instamagnetico/blob/arquivos-midiaticos/3.gif?raw=true" class="w-full h-full object-cover" referrerpolicy="no-referrer">
+                        </div>
+                        <div class="marquee-item shrink-0 w-64 aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 glass">
+                            <img src="https://github.com/Bilionariozinho/arquivos-de-imagens-instamagnetico/blob/arquivos-midiaticos/4.gif?raw=true" class="w-full h-full object-cover" referrerpolicy="no-referrer">
                         </div>
                     </div>
                 </div>
@@ -658,6 +696,56 @@
     <!-- GSAP ANIMATIONS -->
     <script>
         gsap.registerPlugin(ScrollTrigger);
+
+        // Matrix Effect for #resultados section
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        const section = document.getElementById('resultados');
+
+        function resizeCanvas() {
+            canvas.width = section.offsetWidth;
+            canvas.height = section.offsetHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+        const fontSize = 14;
+        let columns = canvas.width / fontSize;
+        let drops = [];
+
+        function initDrops() {
+            columns = canvas.width / fontSize;
+            drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.random() * -100;
+            }
+        }
+
+        initDrops();
+        window.addEventListener('resize', initDrops);
+
+        function drawMatrix() {
+            // Very subtle trail effect
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#FFFFFF'; // White characters
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
     
         // Hero Entrance
         window.addEventListener('load', () => {
@@ -723,6 +811,41 @@
             duration: 1.5,
             stagger: 0.1,
             ease: "power4.out"
+        });
+
+        // Infinite Marquee GSAP
+        const marqueeTrack = document.querySelector('.marquee-track');
+        if (marqueeTrack) {
+            const items = marqueeTrack.querySelectorAll('.marquee-item');
+            const totalWidth = marqueeTrack.scrollWidth / 2;
+
+            gsap.to(marqueeTrack, {
+                x: -totalWidth,
+                duration: 20,
+                ease: "none",
+                repeat: -1,
+                modifiers: {
+                    x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+                }
+            });
+        }
+
+        // Exit Orbit Animation for #resultados
+        gsap.to('#resultados .reveal', {
+            scrollTrigger: {
+                trigger: '#resultados',
+                start: "bottom 80%",
+                end: "bottom top",
+                scrub: 1,
+                toggleActions: "none play none reverse"
+            },
+            y: -500,
+            x: (i) => (i % 2 === 0 ? -200 : 200),
+            rotation: (i) => (i % 2 === 0 ? -45 : 45),
+            scale: 0.5,
+            opacity: 0,
+            stagger: 0.05,
+            ease: "power2.in"
         });
 
         // Smooth Scroll for Anchor Links
