@@ -99,6 +99,10 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 99, 33, 0.1);
         }
 
+        #matrix-canvas {
+            background: #050505;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -204,7 +208,7 @@
                 <a href="#metodo" class="hover:text-accent transition-colors">O Método</a>
                 <a href="#bonus" class="hover:text-accent transition-colors">Bônus</a>
             </div>
-            <a href="https://payment.ticto.app/OB948C17A" class="btn-premium px-4 py-2 text-[10px] md:text-xs group whitespace-nowrap text-center">
+            <a href="https://checkout.ticto.app/OD4FCC1CD" class="btn-premium px-4 py-2 text-[10px] md:text-xs group whitespace-nowrap text-center">
                 <span class="relative z-10 w-full">Acessar Agora</span>
                 <div class="btn-glow"></div>
             </a>
@@ -282,7 +286,7 @@
                     Acesse o banco exclusivo com mais de <span class="text-white font-bold">3.000 vídeos virais prontos</span> e utilize o Método M3 para viralizar e lucrar em tempo recorde.
                 </p>
                 <div class="flex flex-col md:flex-row items-center justify-center gap-6">
-                    <a href="https://payment.ticto.app/OB948C17A" class="btn-premium px-8 py-4 text-xs md:text-sm group">
+                    <a href="https://checkout.ticto.app/OD4FCC1CD" class="btn-premium px-8 py-4 text-xs md:text-sm group">
                         <span class="relative z-10">Quero Acessar o Instamagnético</span>
                         <div class="btn-glow"></div>
                     </a>
@@ -673,7 +677,7 @@
                     </div>
                 </div>
 
-                <a href="https://payment.ticto.app/OB948C17A" class="btn-premium w-full py-4 text-base md:text-lg group">
+                <a href="https://checkout.ticto.app/OD4FCC1CD" class="btn-premium w-full py-4 text-base md:text-lg group">
                     <span class="relative z-10">Quero Começar Agora</span>
                     <div class="btn-glow"></div>
                 </a>
@@ -738,8 +742,13 @@
             canvas.height = section.offsetHeight;
         }
 
+        let lastWidth = window.innerWidth;
         let resizeTimeout;
         window.addEventListener('resize', () => {
+            const currentWidth = window.innerWidth;
+            if (currentWidth === lastWidth) return; // Ignore height-only changes (mobile address bar)
+            
+            lastWidth = currentWidth;
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 resizeCanvas();
@@ -765,7 +774,7 @@
 
         function drawMatrix() {
             // Very subtle trail effect
-            ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.15)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             ctx.fillStyle = '#FFFFFF'; // White characters
@@ -780,9 +789,10 @@
                 }
                 drops[i]++;
             }
+            requestAnimationFrame(drawMatrix);
         }
 
-        setInterval(drawMatrix, 50);
+        drawMatrix();
     
         // Hero Entrance
         window.addEventListener('load', () => {
